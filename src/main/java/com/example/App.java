@@ -17,28 +17,18 @@ public class App {
       // initialise session object
       Session session = sessionFactory.openSession();
 
-      // Users user1 = new Users();
-      // user1.setFirstName("Tom");
-      // user1.setLastName("Smith");
+      Users user5 = new Users();
+      user5.setFirstName("Eva");
+      user5.setLastName("Smith");
 
-      Users user2 = new Users();
-      user2.setFirstName("Tom");
-      user2.setLastName("Smith");
-
-      Users user3 = new Users();
-      user3.setFirstName("Elaine");
-      user3.setLastName("Smith");
-
-      Users user4 = new Users();
-      user4.setFirstName("Ava");
-      user4.setLastName("Alan");
-
+      Users user6 = new Users();
+      user6.setFirstName("Etta");
+      user6.setLastName("Fernandez");
       session.beginTransaction();
       
-      session.persist(user2);
-      session.persist(user3);
-      session.persist(user4);
-      
+      session.persist(user5);
+      session.persist(user6);
+            
       session.getTransaction().commit();
 
     } catch (Exception e) {
