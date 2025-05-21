@@ -7,7 +7,7 @@ public class App {
     UserDAO userDAO = new UserDAO();
     
     // create user
-    // userDAO.createUser("Emma", "Smith");
+    // userDAO.createUser("Mariano", "Calderon");
 
     // get all users
     // List<Users> list = userDAO.getUsers();

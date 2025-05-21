@@ -14,13 +14,15 @@ public class UserDAO {
 
   // create a user
   public void createUser(String firstName, String lastName) {
-    Session session = sessionFactory.openSession();
-    session.beginTransaction();
 
-    Users user = new Users(firstName, lastName);
-    session.persist(user);
-    session.getTransaction().commit();
-    session.close();
+    try (Session session = sessionFactory.openSession()) {
+      session.beginTransaction();
+      Users user = new Users(firstName, lastName);
+      session.persist(user);
+      session.getTransaction().commit();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
   // gets all users
   public List<Users> getUsers() {
@@ -31,49 +33,54 @@ public class UserDAO {
   }
 
   public String getUserById(int id) {
-    Session session = sessionFactory.openSession();
-    session.beginTransaction();
 
-    Users user = session.find(Users.class, id);
-    if (user != null) {
-      String firstName = user.getFirstName();
-      String lastName = user.getLastName();
-      return firstName + " " + lastName;
-    } else {
-      session.close();
-      return "User not found";
+    try (Session session = sessionFactory.openSession()) {
+      Users user = session.find(Users.class, id);
+
+      if (user != null) {
+        return user.getFirstName() + user.getLastName();
+      } else {
+        return "user not found";
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      return "error";
     }
-
   }
   // updates user's first name
   public void updateUser(int userId, String firstName) {
-    Session session = sessionFactory.openSession();
-    session.beginTransaction();
 
-    Users user = session.find(Users.class, userId);
+    try (Session session = sessionFactory.openSession()) {
+      session.beginTransaction();
+      Users user = session.find(Users.class, userId);
 
-    if (user != null) {
-      user.setFirstName(firstName);
-      session.getTransaction().commit();
-      System.out.println("Update Success");
-    } else {
-      System.out.println("User ID not found");
+      if (user != null) {
+        user.setFirstName(firstName);
+        session.getTransaction().commit();
+        System.out.println("update success");
+      } else {
+        System.out.println("user id not found");
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    session.close();
   }
   // deletes user from db
   public void delete(int userId) {
-    Session session = sessionFactory.openSession();
-    session.beginTransaction();
-    Users user = session.find(Users.class, userId);
 
-    if (user != null) {
-    session.remove(user);
-    session.getTransaction().commit();
-    System.out.println("User deleted");  
-    } else {
-      System.out.println("User not found");
+    try (Session session = sessionFactory.openSession()) {
+      session.beginTransaction();
+      Users user = session.find(Users.class, userId);
+      
+      if (user != null) {
+        session.remove(user);
+        session.getTransaction().commit();;
+        System.out.println("User deleted");
+      } else {
+        System.out.println("User not found");
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    session.close();
   }
 }
