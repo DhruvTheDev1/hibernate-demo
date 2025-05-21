@@ -8,6 +8,7 @@ public class SessionFactoryProvider {
     Configuration config = new Configuration();
     // Configures Hibernate with hibernate.cfg.xml
     config.configure();
+    config.addAnnotatedClass(Users.class);
     return config.buildSessionFactory();
   }
 }

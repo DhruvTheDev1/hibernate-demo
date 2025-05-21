@@ -24,8 +24,7 @@ public class Users {
   public Users() {
   }
 
-  public Users(int id, String firstName, String lastName) {
-    this.id = id;
+  public Users(String firstName, String lastName) {
     this.firstName = firstName;
     this.lastName = lastName;
   }
@@ -48,6 +47,11 @@ public class Users {
 
   public void setLastName(String lastName) {
     this.lastName = lastName;
+  }
+
+  @Override
+  public String toString() {
+      return firstName + " " + lastName; 
   }
 
 }
