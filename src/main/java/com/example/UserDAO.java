@@ -29,6 +29,22 @@ public class UserDAO {
     // works with entities and their attributes
     return session.createQuery("SELECT u FROM Users u", Users.class).getResultList();
   }
+
+  public String getUserById(int id) {
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+
+    Users user = session.find(Users.class, id);
+    if (user != null) {
+      String firstName = user.getFirstName();
+      String lastName = user.getLastName();
+      return firstName + " " + lastName;
+    } else {
+      session.close();
+      return "User not found";
+    }
+
+  }
   // updates user's first name
   public void updateUser(int userId, String firstName) {
     Session session = sessionFactory.openSession();
