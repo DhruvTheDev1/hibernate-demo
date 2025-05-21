@@ -10,10 +10,9 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users")
 public class Users {
-
-  @Id
-  @Column(name = "idusers")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id // marks id as primary key
+  @Column(name = "idusers") // column name in table
+  @GeneratedValue(strategy = GenerationType.IDENTITY) // auto generates id
   private int id;
 
   @Column(name = "firstname")
@@ -21,6 +20,15 @@ public class Users {
 
   @Column(name = "lastname")
   private String lastName;
+
+  public Users() {
+  }
+
+  public Users(int id, String firstName, String lastName) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
 
   public int getId() {
     return id;
