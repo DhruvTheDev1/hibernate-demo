@@ -18,6 +18,9 @@ public class App {
     // get user by id
    // System.out.println(userDAO.getUserById(1));
 
+   // get user by name
+   System.out.println(userDAO.getUserByName("Tom"));
+
     // update user - currently only updates first name
     // currently - kept it so you need to inser user ID and first name
     // userDAO.updateUser(1, "Tom");

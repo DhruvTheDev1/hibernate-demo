@@ -24,6 +24,7 @@ public class UserDAO {
       e.printStackTrace();
     }
   }
+
   // gets all users
   public List<Users> getUsers() {
     Session session = sessionFactory.openSession();
@@ -47,6 +48,26 @@ public class UserDAO {
       return "error";
     }
   }
+
+  // find user by their first name
+  public String getUserByName(String firstName) {
+    try (Session session = sessionFactory.openSession()) {
+      String hql = "FROM Users u WHERE u.firstName = :firstName";
+      Users user = session.createQuery(hql, Users.class)
+          .setParameter("firstName", firstName)
+          .uniqueResult();
+
+      if (user != null) {
+        return user.getFirstName() + " " + user.getLastName();
+      } else {
+        return "user not found";
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      return "error";
+    }
+  }
+
   // updates user's first name
   public void updateUser(int userId, String firstName) {
 
@@ -65,16 +86,18 @@ public class UserDAO {
       e.printStackTrace();
     }
   }
+
   // deletes user from db
   public void delete(int userId) {
 
     try (Session session = sessionFactory.openSession()) {
       session.beginTransaction();
       Users user = session.find(Users.class, userId);
-      
+
       if (user != null) {
         session.remove(user);
-        session.getTransaction().commit();;
+        session.getTransaction().commit();
+        ;
         System.out.println("User deleted");
       } else {
         System.out.println("User not found");
