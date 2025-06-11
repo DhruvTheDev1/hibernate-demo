@@ -39,7 +39,7 @@ public class UserDAO {
       Users user = session.find(Users.class, id);
 
       if (user != null) {
-        return user.getFirstName() + user.getLastName();
+        return user.getFirstName() + " " + user.getLastName();
       } else {
         return "user not found";
       }

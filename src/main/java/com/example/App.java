@@ -1,6 +1,5 @@
 package com.example;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,8 +13,8 @@ public class App {
   public static void main(String[] args) {
     App app = new App();
     Scanner scanner = new Scanner(System.in);
-    // basic example CRUD
 
+    // basic console CRUD
     while (true) {
       System.out.println("Welcome!");
       System.out.println("1 - Create User");
@@ -28,10 +27,12 @@ public class App {
 
       int input = scanner.nextInt();
       scanner.nextLine();
-
+      // exit application
       if (input == 7) {
         System.out.println("Exiting...");
         break;
+
+        // create user
       } else if (input == 1) {
         System.out.println("First Name: ");
         String firstName = scanner.nextLine();
@@ -39,39 +40,51 @@ public class App {
         String lastName = scanner.nextLine();
         app.createUser(firstName, lastName);
         System.out.println("User Created");
+
+        // list all users
       } else if (input == 2) {
         List<Users> users = app.listUsers();
-        if (users.isEmpty()) {
-          System.out.println("No users");
-        } else {
-          for (Users user : users) {
-            System.out.println(user);
-          }
+        for (Users user : users) {
+          System.out.println(user);
         }
       }
-    }
 
-    // create user
-    // userDAO.createUser("Mariano", "Calderon");
+      // get user by id
+      else if (input == 3) {
+        System.out.println("Enter user id: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println(app.getUserByID(id));
+      }
 
-    // get all users
-    // List<Users> list = userDAO.getUsers();
-    // for (Users user : list) {
-    // System.out.println(user);
-    // }
+      // get user by first name
+      else if (input == 4) {
+        System.out.println("Enter User's first name");
+        String fname = scanner.nextLine();
+        System.out.println(app.getUserByFirstName(fname));
+      }
 
-    // get user by id
-    // System.out.println(userDAO.getUserById(1));
+      // update user's first name
+      // currently kept it so id and first name needed
+      else if (input == 5) {
+        System.out.println("Enter user ID");
+        int userid = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Enter user first name");
+        String first = scanner.nextLine();
+        app.updateUser(userid, first);
+      }
 
-    // get user by name
-    // System.out.println(userDAO.getUserByName("Tom"));
-
-    // update user - currently only updates first name
-    // currently - kept it so you need to inser user ID and first name
-    // userDAO.updateUser(1, "Tom");
-
-    // delete a user based on id
-    // userDAO.delete(7);
+      // delete user by id
+      else if (input == 6) {
+        System.out.println("Enter user id to delete");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        app.deleteUserById(id);
+      } else {
+        System.out.println("Invalid input");
+      }
+    } // end of while
   }
 
   public void createUser(String firstName, String lastName) {
@@ -82,4 +95,21 @@ public class App {
     List<Users> users = userDAO.getUsers();
     return users;
   }
+
+  public String getUserByID(int id) {
+    return userDAO.getUserById(id);
+  }
+
+  public String getUserByFirstName(String fName) {
+    return userDAO.getUserByName(fName);
+  }
+
+  public void updateUser(int id, String fName) {
+    userDAO.updateUser(id, fName);
+  }
+
+  public void deleteUserById(int id) {
+    userDAO.delete(id);
+  }
+
 }
